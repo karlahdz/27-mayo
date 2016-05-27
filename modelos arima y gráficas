@@ -1,0 +1,29 @@
+require(fpp)
+base<-read.csv("C:\\Users\\SALA-C21\\Documents\\pib1.csv")
+part<-ts(base[,2], start=1993, frequency=4)
+M1<-auto.arima(part,seasonal=FALSE)
+M2<-Arima(part,order = c(3,1,0))
+M3<-Arima(part,order = c(0,1,0))
+M4<-Arima(part,order = c(1,0,0))
+M1.1<-forecast(M1,h=4)
+M2.1<-forecast(M2,h=4)
+M3.1<-forecast(M3,h=4)
+plot(part,ylab="Precio",xlab="Año",main="PIB",col="blue",type="o")
+lines(fitted(M1),col="red",type="o")
+lines(fitted(M2),col="green",type="o")
+lines(fitted(M3),col="yellow",type="o")
+lines(fitted(M4),col="pink",type="o")
+lines(M1.1$mean,col="black",type="o")
+lines(M2.1$mean,col="black",type="o")
+lines(M3.1$mean,col="black",type="o")
+legend("topleft",lty=1,col=c(1,"red","green","yellow","pink"),c("data","Modelo 1","Modelo 2","Modelo Caminata Aleatoria","Modelo Autorregresivo"),pch=10)
+##solo estamos viendo cual es el mejor modelo para pronosticar aun no estamos pronosticando
+##para pronosticar
+forecast(M1, h=4)
+###Ejercicio
+#Elijan una serie de tiempo 
+#Apliquen la función auto.arima (3,1,0)
+#Apliquen función arima (p,q,d) con dos modelos diferentes al que genere la función auto.arima
+#Generen los pronosticos de los modelos
+#Generar 1 grafica con los valores reales y los valores ajustados de los 3 modelos
+#Generar grafica con los valores reales y los valores ajustados y pronosticados en los 3 modelos numero de pronosticos=4
